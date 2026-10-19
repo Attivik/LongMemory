@@ -19,7 +19,7 @@ import type { script_name, text_direction } from './script_detection.js';
 export type locale_context = { locale: string; language: language_code; script: script_name; region: string | null; direction: text_direction; cultural_context: Record<string, unknown> };
 
 const default_locales: Partial<Record<language_code, string>> = {
-    en:'en-US', hi:'hi-IN', te:'te-IN', ta:'ta-IN', bn:'bn-IN', ur:'ur-PK', ar:'ar-SA', es:'es-ES', fr:'fr-FR', de:'de-DE', nl:'nl-NL', fi:'fi-FI', zh:'zh-CN', ja:'ja-JP', ko:'ko-KR', ru:'ru-RU', pt:'pt-BR',
+    en:'en-US', hi:'hi-IN', te:'te-IN', ta:'ta-IN', bn:'bn-IN', ur:'ur-PK', ar:'ar-SA', es:'es-ES', fr:'fr-FR', de:'de-DE', nl:'nl-NL', fi:'fi-FI', zh:'zh-CN', ja:'ja-JP', ko:'ko-KR', ru:'ru-RU', pt:'pt-BR', it:'it-IT',
 };
 
 export function create_locale_context(language: language_code, script: script_name, locale?: string, direction: text_direction = script === 'Arabic' ? 'rtl' : 'ltr'): locale_context {

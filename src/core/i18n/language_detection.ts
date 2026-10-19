@@ -15,7 +15,7 @@
 
 import { detect_script, script_of_character, type script_detection, type script_name } from './script_detection.js';
 
-export type language_code = 'en' | 'hi' | 'te' | 'ta' | 'bn' | 'ur' | 'ar' | 'es' | 'fr' | 'de' | 'nl' | 'fi' | 'zh' | 'ja' | 'ko' | 'ru' | 'pt' | 'mixed' | 'und';
+export type language_code = 'en' | 'hi' | 'te' | 'ta' | 'bn' | 'ur' | 'ar' | 'es' | 'fr' | 'de' | 'nl' | 'fi' | 'zh' | 'ja' | 'ko' | 'ru' | 'pt' | 'it' | 'mixed' | 'und';
 
 export type language_detection = {
     language: language_code;
@@ -41,6 +41,7 @@ const lexical: Partial<Record<language_code, Set<string>>> = {
     nl: new Set(['de', 'het', 'een', 'voor', 'met', 'gebruiker', 'voorkeur', 'taal', 'project']),
     fi: new Set(['ja', 'on', 'että', 'varten', 'kanssa', 'käyttäjä', 'suosii', 'kieli', 'projekti']),
     pt: new Set(['o', 'a', 'os', 'as', 'para', 'com', 'usuário', 'prefere', 'idioma', 'projeto']),
+    it: new Set(['il', 'lo', 'gli', 'è', 'di', 'che', 'per', 'non', 'sono', 'anche', 'della', 'nel', 'utente', 'preferisce', 'lingua', 'progetto']),
 };
 
 const script_language: Partial<Record<script_name, language_code>> = {
