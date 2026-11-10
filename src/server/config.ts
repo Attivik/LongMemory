@@ -17,12 +17,14 @@ import type { memory_config } from '../core/create_memory.js';
 import { create_embedding_environment } from '../core/embeddings/environment.js';
 import type { embedding_provider_config } from '../core/embeddings/types.js';
 import type { rate_limit_config } from './middleware/rate_limit.js';
+import { parse_mcp_recall_limit } from '../mcp/recall_limit.js';
 
 export type server_config = {
     host: string;
     port: number;
     api_key: string | null;
     mcp_http: boolean;
+    mcp_recall_limit: number | null;
     max_payload_size: number;
     rate_limit: rate_limit_config;
     log_auth: boolean;
@@ -78,6 +80,7 @@ export function load_server_config(env: NodeJS.ProcessEnv = process.env): server
         port: num_alias(env, ['LONGMEMORY_PORT', 'PORT', 'OM_PORT'], 7331, 0, 65_535),
         api_key: first(env, 'LONGMEMORY_API_KEY', 'OM_API_KEY') || null,
         mcp_http: bool(env, 'LONGMEMORY_MCP_HTTP', false),
+        mcp_recall_limit: parse_mcp_recall_limit(env),
         max_payload_size: num_alias(env, ['LONGMEMORY_MAX_PAYLOAD_SIZE', 'OM_MAX_PAYLOAD_SIZE'], 1_048_576, 1_024, 1_073_741_824),
         rate_limit: {
             enabled: bool_alias(env, ['LONGMEMORY_RATE_LIMIT_ENABLED', 'OM_RATE_LIMIT_ENABLED'], false),

@@ -59,6 +59,7 @@ export function register_recall_tool(server: mcp_server_sdk, runtime: mcp_runtim
             text: input.query,
             mode: input.mode,
             token_budget: input.token_budget,
+            ...(runtime.recall_limit !== null ? { k: runtime.recall_limit } : {}),
             world_id,
             permission_context: recall_permission(runtime.access, input.user_id, project_id ?? undefined),
         });

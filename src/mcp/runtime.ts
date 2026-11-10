@@ -21,6 +21,7 @@ import { mcp_audit_log } from './security/audit.js';
 import { create_embedding_environment } from '../core/embeddings/environment.js';
 import { create_tool_allowlist, type mcp_tool_name } from './security/tool_allowlist.js';
 import type { mcp_access } from './security/permissions.js';
+import { parse_mcp_recall_limit } from './recall_limit.js';
 
 export type mcp_runtime_config = {
     memory?: long_memory;
@@ -39,6 +40,8 @@ export type mcp_runtime_config = {
     audit_path?: string | null;
     connector_registry?: ConnectorRegistry;
     env?: NodeJS.ProcessEnv;
+    /** Max memories returned by longmemory_recall; null = unlimited. Defaults to LONGMEMORY_MCP_RECALL_LIMIT. */
+    recall_limit?: number | null;
 };
 
 const current_project = (cwd: string) => basename(resolve(cwd)).toLowerCase().replace(/[^a-z0-9._-]+/g, '-') || 'current';
@@ -48,6 +51,7 @@ export class mcp_runtime {
     readonly access: mcp_access;
     readonly audit: mcp_audit_log;
     readonly cwd: string;
+    readonly recall_limit: number | null;
     private readonly owns_memory: boolean;
     private readonly tenant_id: string;
     private readonly connector_registry?: ConnectorRegistry;
@@ -58,6 +62,7 @@ export class mcp_runtime {
         this.tenant_id = config.tenant_id ?? 'default';
         this.connector_registry = config.connector_registry;
         const embeddings = create_embedding_environment(config.env ?? process.env);
+        this.recall_limit = config.recall_limit !== undefined ? config.recall_limit : parse_mcp_recall_limit(config.env ?? process.env);
         const project_id = config.project_id === 'current' ? current_project(this.cwd) : config.project_id ?? null;
         this.memory = config.memory ?? create_memory({
             store: config.db_path ? 'sqlite' : 'memory',

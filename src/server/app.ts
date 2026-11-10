@@ -111,6 +111,7 @@ export function create_long_memory_app(options: server_options = {}): long_memor
             user_id: config.memory.user_id ?? 'default',
             tenant_id: config.memory.tenant_id ?? 'default',
             audit_path: `${config.memory.db_path}.mcp-audit.jsonl`,
+            recall_limit: config.mcp_recall_limit,
         }),
     }));
     const handler: RequestListener = async (request, response) => {

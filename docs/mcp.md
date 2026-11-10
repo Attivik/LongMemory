@@ -71,6 +71,11 @@ The deny-by-default allowlist contains exactly thirteen high-level tools:
 - `longmemory_asset_catalog`
 - `longmemory_manage_asset`
 
+`LONGMEMORY_MCP_RECALL_LIMIT` caps how many memories `longmemory_recall` returns
+in `strict`, `associative` and `world_grounded` modes, keeping the most relevant
+ones. Unset, empty or `0` keeps the default of returning every match. It applies
+to both stdio and Streamable HTTP.
+
 Recall delegates to Hydrograph modes and their temporal, contract,
 contradiction, grounding, confidence, world, and permission gates. Connector
 sync defaults to `dry_run: true`. Read-only mode rejects write-capable tools.
